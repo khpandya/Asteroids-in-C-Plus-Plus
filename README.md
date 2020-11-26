@@ -1,2 +1,2 @@
-# Asteroids-in-C-Plus-Plus
+# Asteroids-in-C++
 asteroids in c++ using sfml
