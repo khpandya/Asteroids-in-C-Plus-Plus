@@ -1,0 +1,24 @@
+CXX = clang++
+CXXFLAGS = -std=c++17
+LDLIBS = -lsfml-graphics -lsfml-window -lsfml-system
+
+# We split the list of files into CORE (no SFML) and those requiring SFML.
+CORE_H_FILES = Body.h collisions.h Colour.h Entity.h TriFan.h Vecs.h
+SFML_H_FILES = Game.h 
+
+CORE_CXX_FILES = Body.cpp collisions.cpp Colour.cpp Entity.cpp TriFan.cpp Vecs.cpp
+SFML_CXX_FILES = Game.cpp
+
+all: sfml_game.exe
+#all: sfml_body_utils.exe
+
+sfml_game.exe: sfml_game.cpp $(CORE_H_FILES) $(SFML_H_FILES) $(CORE_CXX_FILES) $(SFML_CXX_FILES) Makefile.sfml
+	$(CXX) $(CXXFLAGS) sfml_game.cpp $(CORE_CXX_FILES) $(SFML_CXX_FILES) -o sfml_game.exe $(LDLIBS)
+
+sfml_body_utils.exe: sfml_body_utils.cpp body_utils.h $(CORE_H_FILES) $(SFML_H_FILES) $(CORE_CXX_FILES) $(SFML_CXX_FILES) Makefile.sfml
+	$(CXX) $(CXXFLAGS) sfml_body_utils.cpp $(CORE_CXX_FILES) $(SFML_CXX_FILES) -o sfml_body_utils.exe $(LDLIBS)
+
+.PHONY: clean
+
+clean:
+	rm -f sfml_game.exe sfml_body_utils.exe *.o
